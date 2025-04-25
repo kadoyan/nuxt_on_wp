@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import '~/assets/css/custom.scss';
+
+@plugin "daisyui" {
+	/* themes: silk --default, night --prefersdark; */
+  themes: silk --default
+  root: ":root";
+  logs: true;
+}
+

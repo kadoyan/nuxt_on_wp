@@ -1,0 +1,289 @@
+@use "tailwindcss";
+
+.fade-enter-active,
+.fade-leave-active {
+    @apply transition-opacity duration-500;
+}
+
+.logo-mask {
+    mask-image: linear-gradient(to top, transparent 25%, black 50%);
+    opacity: 0.4;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotation 5s linear infinite;
+}
+
+.rotate-reverse {
+    animation: rotation 5s linear infinite reverse;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    @apply opacity-0;
+}
+
+body {
+    font-family: "Helvetica Neue",
+        Arial,
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        Meiryo,
+        sans-serif;
+    font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+.heading,
+.extend_sansserif {
+    font-family: "IBM Plex Sans JP", sans-serif;
+    font-style: normal;
+}
+
+.site-title {
+    position: relative;
+    background: linear-gradient(40deg, #1D2B53 0%, #1D2B53 6.66%, #7E2553 6.66%, #7E2553 13.32%, #008751 13.32%, #008751 19.98%, #AB5236 19.98%, #AB5236 26.64%, #5F574F 26.64%, #5F574F 33.3%, #C2C3C7 33.3%, #C2C3C7 39.96%, #FFF1E8 39.96%, #FFF1E8 46.62%, #FF004D 46.62%, #FF004D 53.28%, #FFA300 53.28%, #FFA300 59.94%, #FFEC27 59.94%, #FFEC27 66.6%, #00E436 66.6%, #00E436 73.26%, #29ADFF 73.26%, #29ADFF 79.92%, #83769C 79.92%, #83769C 86.58%, #FF77A8 86.58%, #FF77A8 93.24%, #FFCCAA 93.24%, #FFCCAA 100%);
+    background-size: 200% 100%;
+    background-repeat: repeat-x;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition-property: background-position;
+    transition-timing-function: linear;
+    animation: scroll 20s linear infinite;
+
+    &::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0.2rem;
+        left: 0.0;
+        z-index: -1;
+        background-color: #7E2553;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+    }
+}
+
+@keyframes scroll {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 400% 0%;
+    }
+}
+
+.footer {
+    .about {
+        @apply text-xs/5;
+
+        p {
+            @apply mt-1;
+        }
+
+        h2 {
+            @apply text-xl/5 mb-3;
+        }
+    }
+}
+
+.footer,
+.wp-post-content {
+    font-size: 1em;
+    line-height: 1.8;
+
+    a {
+        @apply text-blue-800 underline
+    }
+
+    p {
+        @apply mt-3;
+
+        &:first-of-type {
+            @apply mt-0;
+        }
+    }
+
+    .wp-block-columns {
+        @apply flex gap-8 flex-nowrap mt-5;
+    }
+
+    .wp-block-column {
+        @apply flex-1;
+    }
+
+    .wp-block-code,
+    .wp-block-image {
+        @apply my-6;
+    }
+
+
+    .wp-block-image .aligncenter,
+    .wp-block-image .alignleft,
+    .wp-block-image .alignright,
+    .wp-block-image.aligncenter,
+    .wp-block-image.alignleft,
+    .wp-block-image.alignright {
+        display: table;
+    }
+
+    .wp-block-media-text {
+        margin-top: 5em;
+        direction: ltr;
+        display: grid;
+        grid-template-columns: 50% 1fr;
+        grid-template-rows: auto;
+
+        .wp-block-media-text__media {
+            grid-column: 1;
+            grid-row: 1;
+            margin: 0;
+        }
+
+        .wp-block-media-text__content {
+            padding: 0 1em;
+        }
+    }
+}
+
+.wp-post-content {
+
+    h2 {
+        margin-top: 2.2em;
+        margin-bottom: 0.5em;
+        font-size: 1.8em;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 50%;
+            height: 1px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #aaa;
+            margin-bottom: 2em;
+        }
+    }
+
+    h3 {
+        position: relative;
+        padding-left: 1.4em;
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+        font-size: 1.5em;
+        line-height: 1;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1em;
+            height: 1em;
+            @apply bg-neutral-600 rounded-sm;
+        }
+    }
+
+    h4 {
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        font-size: 1.3em;
+    }
+
+    pre {
+        @apply rounded-md block overflow-hidden;
+
+        .hljs {
+            @apply p-6 text-sm;
+        }
+    }
+
+    .wp-block-media-text,
+    .wp-block-image {
+        figure img {
+            @apply rounded-sm overflow-hidden shadow-md;
+        }
+
+        .aligncenter {
+            @apply mx-auto;
+        }
+    }
+
+    .wp-block-quote {
+        border-left: 5px solid #ccc;
+        background-color: #fff;
+        margin: 1.5em 0;
+        padding: 1em 1.5em;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+
+        p {
+            margin-top: 0;
+            line-height: 1.5;
+
+            &:not(:first-of-type) {
+                margin-top: 0.5em;
+            }
+        }
+    }
+
+    table {
+        @apply border-collapse border border-gray-300 mt-4;
+        width: 100%;
+
+        th,
+        td {
+            @apply border border-gray-300 p-2;
+        }
+
+        th {
+            @apply bg-white;
+        }
+
+        tr {
+            @apply bg-gray-50;
+        }
+    }
+
+    ul {
+        @apply list-disc list-inside mt-2;
+    }
+
+    ol {
+        @apply list-decimal list-inside mt-2;
+    }
+
+    @media (min-width: 768px) {
+        .wp-block-media-text {
+            .wp-block-media-text__content {
+                padding: 0 2em;
+            }
+
+            .has-media-on-the-right {
+                grid-template-columns: 1fr 50%
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .wp-post-content {
+        .wp-block-media-text.is-stacked-on-mobile {
+            grid-template-columns: 100% !important
+        }
+    }
+}
