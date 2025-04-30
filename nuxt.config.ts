@@ -5,13 +5,14 @@ import type { WPPost } from "./types/wordpress";
 
 const WP_API_BASE = process.env.WP_API_BASE;
 const API_URL = `${WP_API_BASE}wp/v2/`;
-console.log("WP_API_BASE", WP_API_BASE);
 
 const fetchRoutes = async () => {
 	// 環境変数が設定されていない場合のチェック
 	if (!WP_API_BASE) {
 		console.warn("WP_API_BASE is not set. Skipping dynamic route generation.");
 		return []; // デフォルトの空配列を返す
+	} else {
+		console.warn("WP_API_BASE is defineded. API_URL:", API_URL);
 	}
 
 	try {
