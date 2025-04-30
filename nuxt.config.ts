@@ -3,39 +3,52 @@ import tailwindcss from "@tailwindcss/vite";
 import axios from "axios";
 import type { WPPost } from "./types/wordpress";
 
-const WP_API_BASE = process.env.WP_API_BASE;
+// 環境変数の安全な取得とURLの正しい構築
+const WP_API_BASE = process.env.WP_API_BASE || "";
 const API_VERSION = "wp/v2";
-const API_URL = `${WP_API_BASE}${API_VERSION}/`;
+// スラッシュの重複を避け、かつ必要なスラッシュを確保
+const API_URL = WP_API_BASE
+	? `${
+			WP_API_BASE.endsWith("/") ? WP_API_BASE : `${WP_API_BASE}/`
+	  }${API_VERSION}/`
+	: "";
 
 const fetchRoutes = async () => {
 	// 環境変数が設定されていない場合のチェック
-	if (!API_URL) {
-		console.warn(
-			"API_URL is not set. Using default routes or skipping API fetch."
-		);
-		return []; // または適切なデフォルト値
+	if (!WP_API_BASE) {
+		console.warn("WP_API_BASE is not set. Skipping dynamic route generation.");
+		return []; // デフォルトの空配列を返す
 	}
-	const resPost = await axios.get(`${API_URL}posts?_embed&per_page=100`);
-	const posts = resPost.data;
 
-	const postPath = posts.map((post: WPPost) => {
-		const category =
-			post._embedded?.["wp:term"]?.[0]?.[0]?.slug ?? "uncategorized";
-		const slug = post.slug;
-		const path = `/${category}/${slug}`;
-		return path;
-	});
+	try {
+		const resPost = await axios.get(`${API_URL}posts?_embed&per_page=100`);
+		const posts = resPost.data;
 
-	const resCategory = await axios.get(`${API_URL}categories`);
-	const categories = resCategory.data;
-	const categoryPath = categories.map((category: WPPost) => {
-		const path = `/${category.slug}/`;
-		return path;
-	});
-	return postPath.concat(categoryPath);
+		const postPath = posts.map((post: WPPost) => {
+			const category =
+				post._embedded?.["wp:term"]?.[0]?.[0]?.slug ?? "uncategorized";
+			const slug = post.slug;
+			const path = `/${category}/${slug}`;
+			return path;
+		});
+
+		const resCategory = await axios.get(`${API_URL}categories`);
+		const categories = resCategory.data;
+		const categoryPath = categories.map((category: WPPost) => {
+			const path = `/${category.slug}/`;
+			return path;
+		});
+		return postPath.concat(categoryPath);
+	} catch (error) {
+		console.error("Error fetching routes:", error);
+		return []; // エラー時は空の配列を返す
+	}
 };
 
-const dynamicRoutes = await fetchRoutes();
+// 開発環境か本番環境かによって処理を分岐
+const isDev = process.env.NODE_ENV === "development";
+// 開発環境または環境変数が設定されている場合のみ動的ルートを取得
+const dynamicRoutes = WP_API_BASE || isDev ? await fetchRoutes() : [];
 
 export default defineNuxtConfig({
 	modules: ["@nuxt/eslint", "@nuxt/image", "@pinia/nuxt", "@nuxt/scripts"],
@@ -81,7 +94,7 @@ export default defineNuxtConfig({
 		prerender: {
 			failOnError: false,
 			crawlLinks: true,
-			routes: ["/", ...dynamicRoutes],
+			routes: ["/", ...(dynamicRoutes || [])],
 		},
 	},
 	$production: {
