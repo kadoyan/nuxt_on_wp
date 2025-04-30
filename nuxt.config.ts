@@ -3,11 +3,18 @@ import tailwindcss from "@tailwindcss/vite";
 import axios from "axios";
 import type { WPPost } from "./types/wordpress";
 
-const WP_API_BASE = process.env.WP_API_BASE; //"https://pico8.penpale.jp/wp-json/";
+const WP_API_BASE = process.env.WP_API_BASE;
 const API_VERSION = "wp/v2";
 const API_URL = `${WP_API_BASE}${API_VERSION}/`;
 
 const fetchRoutes = async () => {
+	// 環境変数が設定されていない場合のチェック
+	if (!API_URL) {
+		console.warn(
+			"API_URL is not set. Using default routes or skipping API fetch."
+		);
+		return []; // または適切なデフォルト値
+	}
 	const resPost = await axios.get(`${API_URL}posts?_embed&per_page=100`);
 	const posts = resPost.data;
 
