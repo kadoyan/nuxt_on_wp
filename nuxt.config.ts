@@ -45,10 +45,7 @@ const fetchRoutes = async () => {
 	}
 };
 
-// 開発環境か本番環境かによって処理を分岐
-const isDev = process.env.NODE_ENV === "development";
-// 開発環境または環境変数が設定されている場合のみ動的ルートを取得
-const dynamicRoutes = WP_API_BASE || isDev ? await fetchRoutes() : [];
+const dynamicRoutes = await fetchRoutes();
 
 export default defineNuxtConfig({
 	modules: ["@nuxt/eslint", "@nuxt/image", "@pinia/nuxt", "@nuxt/scripts"],
