@@ -18,7 +18,7 @@
     "pinia": "^3.0.2",
     "typescript": "^5.8.3",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -35,11 +35,11 @@
     "@tailwindcss/vite": "^4.1.4",
     "autoprefixer": "^10.4.21",
     "axios": "^1.9.0",
-    "daisyui": "^5.0.26",
-    "eslint": "^9.24.0",
+    "daisyui": "^5.0.30",
+    "eslint": "^9.25.1",
     "highlight.js": "^11.11.1",
     "postcss": "^8.5.3",
-    "sass": "^1.86.3",
+    "sass": "^1.87.0",
     "tailwindcss": "^4.1.4"
   }
 }
