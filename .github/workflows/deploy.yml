@@ -21,6 +21,8 @@ jobs:
         run: npm install
 
       - name: Generate static files
+        env:
+          API_URL: ${{ secrets.API_URL }}
         run: npm run generate
 
       - uses: actions/checkout@v4
