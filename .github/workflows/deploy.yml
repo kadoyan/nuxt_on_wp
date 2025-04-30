@@ -32,7 +32,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: ${{ secrets.SOURCE }}
-          source: ${{ secrets.SOURCE }}
           target: ${{ secrets.TARGET }}
 
       # - name: Deploy via FTP
