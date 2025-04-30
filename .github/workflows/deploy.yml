@@ -25,6 +25,9 @@ jobs:
           API_URL: ${{ secrets.API_URL }}
         run: npm run generate
 
+      - name: List files to be transferred
+        run: ls -la ${{ secrets.SOURCE }}
+
       - uses: actions/checkout@v4
       - name: Copy files via SSH
         uses: appleboy/scp-action@v1
