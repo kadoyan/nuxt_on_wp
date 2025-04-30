@@ -22,7 +22,7 @@ jobs:
 
       - name: Generate static files
         env:
-          API_URL: ${{ secrets.API_URL }}
+          API_URL: ${{ secrets.WP_API_BASE }}
         run: npm run generate
 
       - name: List files to be transferred
