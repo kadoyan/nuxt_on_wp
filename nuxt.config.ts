@@ -16,7 +16,23 @@ const fetchRoutes = async () => {
 	}
 
 	try {
-		const resPost = await axios.get(`${API_URL}posts?_embed&per_page=100`);
+		// アプリケーションパスワードを使用したBasic認証
+		const wpUser = process.env.WP_API_USER || "";
+		const wpAppPass = process.env.WP_API_APP_PASSWORD || "";
+
+		// リクエストヘッダー
+		const headers = {
+			"User-Agent":
+				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+		};
+		if (wpUser && wpAppPass) {
+			const token = Buffer.from(`${wpUser}:${wpAppPass}`).toString("base64");
+			headers["Authorization"] = `Basic ${token}`;
+		}
+
+		const resPost = await axios.get(`${API_URL}posts?_embed&per_page=100`, {
+			headers,
+		});
 		const posts = resPost.data;
 
 		const postPath = posts.map((post: WPPost) => {
@@ -27,7 +43,7 @@ const fetchRoutes = async () => {
 			return path;
 		});
 
-		const resCategory = await axios.get(`${API_URL}categories`);
+		const resCategory = await axios.get(`${API_URL}categories`, { headers });
 		const categories = resCategory.data;
 		const categoryPath = categories.map((category: WPPost) => {
 			const path = `/${category.slug}/`;
