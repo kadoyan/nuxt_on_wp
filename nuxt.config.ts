@@ -5,6 +5,7 @@ import type { WPPost } from "./types/wordpress";
 
 const WP_API_BASE = process.env.WP_API_BASE;
 const API_URL = `${WP_API_BASE}wp/v2/`;
+console.log("WP_API_BASE", WP_API_BASE);
 
 const fetchRoutes = async () => {
 	// 環境変数が設定されていない場合のチェック
