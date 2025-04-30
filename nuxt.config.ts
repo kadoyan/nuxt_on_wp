@@ -3,15 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import axios from "axios";
 import type { WPPost } from "./types/wordpress";
 
-// 環境変数の安全な取得とURLの正しい構築
-const WP_API_BASE = process.env.WP_API_BASE || "";
-const API_VERSION = "wp/v2";
-// スラッシュの重複を避け、かつ必要なスラッシュを確保
-const API_URL = WP_API_BASE
-	? `${
-			WP_API_BASE.endsWith("/") ? WP_API_BASE : `${WP_API_BASE}/`
-	  }${API_VERSION}/`
-	: "";
+const WP_API_BASE = process.env.WP_API_BASE;
+const API_URL = `${WP_API_BASE}wp/v2/`;
 
 const fetchRoutes = async () => {
 	// 環境変数が設定されていない場合のチェック
