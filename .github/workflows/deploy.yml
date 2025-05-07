@@ -22,24 +22,29 @@ jobs:
 
       - name: Generate static files
         env:
-          API_URL: ${{ secrets.API_URL }}
+          WP_API_BASE: ${{ secrets.WP_API_BASE }}
         run: npm run generate
 
-      - uses: actions/checkout@v4
-      - name: Copy files via SSH
-        uses: appleboy/scp-action@v1
+      - name: List files to be transferred
+        run: ls -la ${{ secrets.SOURCE }}
+
+      # - uses: actions/checkout@v4
+      # - name: Copy files via SSH
+      #   uses: appleboy/scp-action@v1
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     passphrase: ${{ secrets.PASSPHRASE }}
+      #     port: ${{ secrets.PORT }}
+      #     source: ${{ secrets.SOURCE }}
+      #     target: ${{ secrets.TARGET }}
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: ${{ secrets.HOST }}
+          server: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          source: ${{ secrets.SOURCE }}
-          target: ${{ secrets.TARGET }}
-
-      # - name: Deploy via FTP
-      #   uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      #   with:
-      #     server: ${{ secrets.FTP_SERVER }}
-      #     username: ${{ secrets.FTP_USERNAME }}
-      #     password: ${{ secrets.FTP_PASSWORD }}
-      #     local-dir: .output/public/
+          local-dir:  ${{ secrets.SOURCE }}
+          server-dir: ${{ secrets.TARGET }}
