@@ -22,8 +22,8 @@ const fetchRoutes = async () => {
 
 		// リクエストヘッダー
 		const headers = {
-			"User-Agent":
-				"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+			// "User-Agent":
+			// 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
 		};
 		if (wpUser && wpAppPass) {
 			const token = Buffer.from(`${wpUser}:${wpAppPass}`).toString("base64");
@@ -59,7 +59,13 @@ const fetchRoutes = async () => {
 const dynamicRoutes = await fetchRoutes();
 
 export default defineNuxtConfig({
-	modules: ["@nuxt/eslint", "@nuxt/image", "@pinia/nuxt", "@nuxt/scripts"],
+	modules: [
+		"@nuxt/eslint",
+		"@nuxt/image",
+		"@pinia/nuxt",
+		"@nuxt/scripts",
+		"@zadigetvoltaire/nuxt-gtm",
+	],
 	runtimeConfig: {
 		secret: process.env.GIT_HUB_TOKEN,
 		public: {
@@ -105,13 +111,8 @@ export default defineNuxtConfig({
 			routes: ["/", ...(dynamicRoutes || [])],
 		},
 	},
-	$production: {
-		scripts: {
-			registry: {
-				googleTagManager: {
-					id: process.env.GOOGLE_TAG_MANAGER_ID,
-				},
-			},
-		},
+	gtm: {
+		id: "GTM-WTKF5DCH",
+		enabled: true,
 	},
 });
