@@ -38,7 +38,8 @@ onMounted(() => {
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@500;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@500;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@100..900&display=swap");
 
 .page-enter-active,
 .page-leave-active {
