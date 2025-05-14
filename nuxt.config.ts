@@ -69,7 +69,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		secret: process.env.GIT_HUB_TOKEN,
 		public: {
-			APL_BASE_URL: process.env.WP_API_BASE,
+			API_BASE_URL: process.env.WP_API_BASE,
 		},
 	},
 
